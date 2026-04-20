@@ -1,3 +1,4 @@
+# This code defines a FastAPI application that allows users to upload files, which are then stored in Azure Blob Storage and a message is sent to an Azure Queue for further processing. The application uses environment variables to configure the connection to Azure services.
 from fastapi import FastAPI, UploadFile, File
 import os
 from dotenv import load_dotenv
