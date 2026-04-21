@@ -1,16 +1,13 @@
 import autogen
-import os
-from dotenv import load_dotenv
+
 from google import genai
 # from openai import AzureOpenAI
-from azure_search import retrieve_chunks
-from logger import log_interaction, generate_question_id
-
-
-load_dotenv()
+from app.azure_search import retrieve_chunks
+from app.logger import log_interaction, generate_question_id
+from app.config import GOOGLE_API_KEY
 
 # Gemini client
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+client = genai.Client(api_key=GOOGLE_API_KEY)
 
 
 #  Custom Gemini function
@@ -20,35 +17,6 @@ def ask_gemini(prompt):
         contents=prompt
     )
     return response.text
-
-# print("ENDPOINT:", openai.api_base)
-# print("DEPLOYMENT:", os.getenv("AZURE_OPENAI_DEPLOYMENT"))
-
-# # Azure OpenAI client
-# client = AzureOpenAI(
-#     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-#     api_version="2024-12-01-preview",
-#     azure_endpoint="https://rag-intern-openai.openai.azure.com/"
-# )
-
-# # Custom function to call Azure OpenAI
-# def ask_gemini(prompt):
-#     try:
-#         response = client.chat.completions.create(
-#             model="gpt-4.1",   # deployment name (yours is correct)
-#             messages=[
-#                 {"role": "system", "content": "You are a helpful assistant."},
-#                 {"role": "user", "content": prompt}
-#             ],
-#             temperature=0.3
-#         )
-
-#         return response.choices[0].message.content
-
-#     except Exception as e:
-#         print("Azure Error:", str(e))
-#         return "⚠️ Error generating response."
-
 
 # prompt guard function to detect potential prompt injection attempts
 def detect_prompt_injection(query):

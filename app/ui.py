@@ -1,6 +1,6 @@
 import streamlit as st
-from main import custom_reply
-from logger import generate_session_id
+from app.main import custom_reply
+from app.logger import generate_session_id
 import requests
 import re
 
@@ -52,8 +52,6 @@ if uploaded_file is not None:
             except Exception as e:
                 st.error(f"❌ Connection error: {str(e)}")
             
-           
-
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []

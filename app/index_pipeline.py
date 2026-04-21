@@ -1,9 +1,7 @@
+import os
 from azure.storage.blob import BlobServiceClient
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
-
-import os
-from dotenv import load_dotenv
 
 from azure.ai.documentintelligence import DocumentIntelligenceClient
 from azure.core.credentials import AzureKeyCredential
@@ -15,19 +13,23 @@ from pypdf import PdfReader, PdfWriter
 import re
 from io import BytesIO
 
-# Load env variables
-load_dotenv()
-
-
+from app.config import (
+    DOCINTEL_ENDPOINT,
+    DOCINTEL_KEY,
+    GOOGLE_API_KEY,
+    AZURE_SEARCH_ENDPOINT,
+    AZURE_SEARCH_INDEX,
+    AZURE_SEARCH_KEY
+)
 # Azure Document Intelligence setup
 docintel_client = DocumentIntelligenceClient(
-    endpoint=os.getenv("DOCINTEL_ENDPOINT"),
-    credential=AzureKeyCredential(os.getenv("DOCINTEL_KEY"))
+    endpoint=DOCINTEL_ENDPOINT,
+    credential=AzureKeyCredential(DOCINTEL_KEY)
 )
 
 
 # Gemini setup
-gemini_client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+gemini_client = genai.Client(api_key=GOOGLE_API_KEY)
 
 def process_and_index(pdf_bytes, file_name, user_id):
     
@@ -96,9 +98,9 @@ def process_and_index(pdf_bytes, file_name, user_id):
 
     #  Store in Azure Search
     search_client = SearchClient(
-        endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
-        index_name=os.getenv("AZURE_SEARCH_INDEX"),
-        credential=AzureKeyCredential(os.getenv("AZURE_SEARCH_KEY"))
+        endpoint=AZURE_SEARCH_ENDPOINT,
+        index_name=AZURE_SEARCH_INDEX,
+        credential=AzureKeyCredential(AZURE_SEARCH_KEY)
     )
 
     documents = []

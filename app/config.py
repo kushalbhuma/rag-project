@@ -1,0 +1,37 @@
+from dotenv import load_dotenv
+import os
+
+# Load .env once here
+load_dotenv()
+
+AZURE_STORAGE_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+AZURE_CONTAINER_NAME = os.getenv("AZURE_CONTAINER_NAME")
+AZURE_QUEUE_NAME = os.getenv("AZURE_QUEUE_NAME")
+DOCINTEL_ENDPOINT = os.getenv("DOCINTEL_ENDPOINT")
+DOCINTEL_KEY = os.getenv("DOCINTEL_KEY")
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+AZURE_SEARCH_ENDPOINT = os.getenv("AZURE_SEARCH_ENDPOINT")
+AZURE_SEARCH_INDEX = os.getenv("AZURE_SEARCH_INDEX")
+AZURE_SEARCH_KEY = os.getenv("AZURE_SEARCH_KEY")
+AZURE_MONITOR_CONNECTION_STRING = os.getenv("AZURE_MONITOR_CONNECTION_STRING")
+
+def validate_config():
+    required_vars = {
+        "AZURE_STORAGE_CONNECTION_STRING": AZURE_STORAGE_CONNECTION_STRING,
+        "AZURE_CONTAINER_NAME": AZURE_CONTAINER_NAME,
+        "AZURE_QUEUE_NAME": AZURE_QUEUE_NAME,
+        "DOCINTEL_ENDPOINT": DOCINTEL_ENDPOINT,
+        "DOCINTEL_KEY": DOCINTEL_KEY,
+        "GOOGLE_API_KEY": GOOGLE_API_KEY,
+        "AZURE_SEARCH_ENDPOINT": AZURE_SEARCH_ENDPOINT,
+        "AZURE_SEARCH_INDEX": AZURE_SEARCH_INDEX,
+        "AZURE_SEARCH_KEY": AZURE_SEARCH_KEY,
+        "AZURE_MONITOR_CONNECTION_STRING": AZURE_MONITOR_CONNECTION_STRING
+    }
+
+    missing = [key for key, value in required_vars.items() if not value]
+
+    if missing:
+        raise ValueError(f"Missing environment variables: {', '.join(missing)}")
