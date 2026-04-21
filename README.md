@@ -20,12 +20,3 @@ Queue triggers worker,
 Worker processes and indexes document,
 User asks questions,
 Relevant data retrieved + LLM generates answer
-
-
-Run Locally:
-Start API
-uvicorn app.api:app
-Start Worker
-python -m app.worker
-Start UI
-python -m streamlit run app/ui.py
