@@ -1,4 +1,5 @@
 # change from feature branch ONLY (rebase demo)
+# Worker process that listens to Azure Queue for new PDF files, downloads them from Blob Storage, processes and indexes them using the pipeline, and then deletes the message from the queue.
 import os
 import json
 import time
