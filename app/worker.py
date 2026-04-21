@@ -1,30 +1,29 @@
 # change from feature branch ONLY (rebase demo)
 # Worker process that listens to Azure Queue for new PDF files, downloads them from Blob Storage, processes and indexes them using the pipeline, and then deletes the message from the queue.
-import os
 import json
 import time
-from dotenv import load_dotenv
 
 from azure.storage.queue import QueueClient
 from azure.storage.blob import BlobServiceClient
 
-from index_pipeline import process_and_index   
+from app.index_pipeline import process_and_index   
 
-# Load env
-load_dotenv()
+from app.config import (
+    AZURE_STORAGE_CONNECTION_STRING,
+    AZURE_QUEUE_NAME,
+    validate_config
+)
+validate_config()
 
-# Azure setup
-connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-queue_name = os.getenv("AZURE_QUEUE_NAME")
 
 # Queue client
 queue_client = QueueClient.from_connection_string(
-    conn_str=connection_string,
-    queue_name=queue_name
+    conn_str=AZURE_STORAGE_CONNECTION_STRING,
+    queue_name=AZURE_QUEUE_NAME
 )
 
 # Blob client
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
 
 print("🚀 Worker started... Listening to queue...")
 

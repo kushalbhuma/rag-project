@@ -1,23 +1,16 @@
 import json
 import uuid
 import logging
-import os
 from datetime import datetime
-from dotenv import load_dotenv
 
 from azure.monitor.opentelemetry import configure_azure_monitor
+from app.config import AZURE_MONITOR_CONNECTION_STRING
 
-# Load env
-load_dotenv()
-
-# Get connection string
-connection_string = os.getenv("AZURE_MONITOR_CONNECTION_STRING")
-
-if not connection_string:
+if not AZURE_MONITOR_CONNECTION_STRING:
     raise ValueError("Azure Monitor connection string not found")
 
 # Configure Azure Monitor (OpenTelemetry)
-configure_azure_monitor(connection_string=connection_string)
+configure_azure_monitor(connection_string=AZURE_MONITOR_CONNECTION_STRING)
 
 # Create logger
 logger = logging.getLogger("rag_logger")

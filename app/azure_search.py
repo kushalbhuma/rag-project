@@ -1,21 +1,23 @@
-import os
-from dotenv import load_dotenv
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents.models import VectorizedQuery
 from google import genai
 
-# Load env
-load_dotenv()
+from app.config import (
+    GOOGLE_API_KEY,
+    AZURE_SEARCH_ENDPOINT,
+    AZURE_SEARCH_INDEX,
+    AZURE_SEARCH_KEY
+)
 
 # Gemini client (for embedding)
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+client = genai.Client(api_key=GOOGLE_API_KEY)
 
 # Azure Search client
 search_client = SearchClient(
-    endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
-    index_name=os.getenv("AZURE_SEARCH_INDEX"),
-    credential=AzureKeyCredential(os.getenv("AZURE_SEARCH_KEY"))
+    endpoint=AZURE_SEARCH_ENDPOINT,
+    index_name=AZURE_SEARCH_INDEX,
+    credential=AzureKeyCredential(AZURE_SEARCH_KEY)
 )
 
 def retrieve_chunks(query, source=None, user_id=None):
