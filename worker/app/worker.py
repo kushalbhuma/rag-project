@@ -6,9 +6,9 @@ import time
 from azure.storage.queue import QueueClient
 from azure.storage.blob import BlobServiceClient
 
-from app.index_pipeline import process_and_index   
+from worker.app.index_pipeline import process_and_index   
 
-from app.config import (
+from shared.config import (
     AZURE_STORAGE_CONNECTION_STRING,
     AZURE_QUEUE_NAME,
     validate_config

@@ -13,7 +13,7 @@ from pypdf import PdfReader, PdfWriter
 import re
 from io import BytesIO
 
-from app.config import (
+from shared.config import (
     DOCINTEL_ENDPOINT,
     DOCINTEL_KEY,
     GOOGLE_API_KEY,

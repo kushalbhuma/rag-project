@@ -1,8 +1,20 @@
+from pathlib import Path
+import sys
+import os
+from dotenv import load_dotenv
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT_DIR))
+
 import streamlit as st
-from app.main import custom_reply
-from app.logger import generate_session_id
+
+from shared.logger import generate_session_id
 import requests
 import re
+
+load_dotenv()
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
 st.set_page_config(page_title="Q&A Chatbot", layout="centered")
 
@@ -28,7 +40,7 @@ if uploaded_file is not None:
 
             try:
                 response = requests.post(
-                    "http://127.0.0.1:8000/upload",
+                    f"{BACKEND_URL}/upload",
                     files=files,
                     data={"user_id": st.session_state.user_id}
                 )
@@ -95,19 +107,20 @@ if user_input:
     print("SESSION USER ID:", st.session_state.user_id)
     print("SESSION ID:", st.session_state.session_id)
     
-    # Generate response
+    # Send to backend and get response
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            success, answer = custom_reply(
-                None,
-                [{"content": user_input}],
-                None,
-                {
-                 "session_id": st.session_state.session_id,
-                 "source": st.session_state.current_doc,
-                 "user_id": st.session_state.user_id
+            response = requests.post(
+                f"{BACKEND_URL}/chat",
+                json={
+                    "query": user_input,
+                    "session_id": st.session_state.session_id,
+                    "source": st.session_state.current_doc,
+                    "user_id": st.session_state.user_id
                 }
             )
+
+            answer = response.json()["answer"]
             st.markdown(answer)
 
     # Save response

@@ -3,7 +3,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents.models import VectorizedQuery
 from google import genai
 
-from app.config import (
+from shared.config import (
     GOOGLE_API_KEY,
     AZURE_SEARCH_ENDPOINT,
     AZURE_SEARCH_INDEX,

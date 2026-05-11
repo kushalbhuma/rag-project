@@ -2,9 +2,9 @@ import autogen
 
 from google import genai
 # from openai import AzureOpenAI
-from app.azure_search import retrieve_chunks
-from app.logger import log_interaction, generate_question_id
-from app.config import GOOGLE_API_KEY
+from shared.azure_search import retrieve_chunks
+from shared.logger import log_interaction, generate_question_id
+from shared.config import GOOGLE_API_KEY
 
 # Gemini client
 client = genai.Client(api_key=GOOGLE_API_KEY)

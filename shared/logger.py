@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 
 from azure.monitor.opentelemetry import configure_azure_monitor
-from app.config import AZURE_MONITOR_CONNECTION_STRING
+from shared.config import AZURE_MONITOR_CONNECTION_STRING
 
 if not AZURE_MONITOR_CONNECTION_STRING:
     raise ValueError("Azure Monitor connection string not found")

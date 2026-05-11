@@ -1,0 +1,5 @@
+streamlit==1.55.0
+requests==2.32.5
+python-dotenv==1.2.2
+azure-monitor-opentelemetry==1.8.7
+azure-monitor-opentelemetry-exporter==1.0.0b49
